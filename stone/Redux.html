@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://127.0.0.1:5500/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redux</title>
+    <script src="./Redux_files/redux.min.js.download"></script>
+</head>
+
+<body>
+    <div>
+        <h1>Total: <span id="total">0</span> </h1>
+        <button id="incrementar">Incrementar</button>
+        <button id="diminuir">Diminuir</button>
+    </div>
+
+    <div>
+        <h2>Adicionar um Valor:</h2>
+        <input id="value_soma" type="text">
+        <button id="somar">Somar</button>
+    </div>
+
+
+
+    <script>
+        //Constantes
+        const INCREMENTAR = 'INCREMENTAR';
+        const SOMAR = 'SOMAR';
+        const REDUZIR = 'REDUZIR';
+
+        function incrementar() {
+            return { type: INCREMENTAR };
+        }
+
+        function reduzir() {
+            return { type: REDUZIR };
+        }
+
+        function somar(payload) {
+            return { type: SOMAR, payload };
+        }
+
+        const initialState = 0;
+        function reducer(state = initialState, action) {
+            switch (action.type) {
+                case INCREMENTAR:
+                    return state + 1;
+
+                case REDUZIR:
+                    return state - 1;
+
+                default:
+                    return state;
+            }
+        }
+
+        const store = Redux.createStore(reducer);
+
+        function render() {
+            const state = store.getState();
+            const total = document.getElementById('total')
+            total.innerText = state;
+        } render()
+
+        store.subscribe(render)
+
+        const buttonIncrementar = document.getElementById('incrementar');
+        buttonIncrementar.addEventListener('click', () => store.dispatch(incrementar()));
+
+        const buttonReduzir = document.getElementById('diminuir');
+        buttonReduzir.addEventListener('click', () => store.dispatch(reduzir()));
+
+        const buttonSomar = document.getElementById('somar');
+        const valueSoma = document.getElementById('value_soma').value;
+        buttonReduzir.addEventListener('click', () => store.dispatch(somar()));
+
+    </script>
+<!-- Code injected by live-server -->
+<script type="text/javascript">
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body></html>
