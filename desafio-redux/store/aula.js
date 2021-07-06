@@ -1,10 +1,10 @@
-// aulas/COMPLETAR_AULA(id), completa a aula com base no ID passado
-// aulas/COMPLETAR_CURSO, completa todas as aulas
-// aulas/RESETAR_CURSO, reseta todas as aulas completas
-// Crie constantes e action creators para as ações.
-// Crie um reducer para aluno e um para aulas.
-// Renderize na tela o nome, email, tempo restante e o total de aulas completas
-// Configure a DevTools
+const COMPLETAR_AULA = 'aluno/COMPLETAR_AULA';
+const COMPLETAR_CURSO = 'aluno/COMPLETAR_CURSO';
+const RESETAR_CURSO = 'aluno/RESETAR_CURSO';
+
+export const completarAula = () => ({ type: COMPLETAR_AULA });
+export const completarCurso = () => ({ type: COMPLETAR_CURSO });
+export const resetarCurso = () => ({ type: RESETAR_CURSO });
 
 const initialState = [
   {
@@ -29,17 +29,11 @@ const initialState = [
   },
 ];
 
-const COMPLETAR_AULA = 'aluno/COMPLETAR_AULA';
-const COMPLETAR_CURSO = 'aluno/COMPLETAR_CURSO';
-const RESETAR_CURSO = 'aluno/RESETAR_CURSO';
-
-export const completar_aula = () => ({ type: COMPLETAR_AULA });
-export const completar_curso = () => ({ type: COMPLETAR_CURSO });
-export const resetar_curso = () => ({ type: RESETAR_CURSO });
-
 const reducer = immer.produce((state = initialState, action) => {
   switch (action.type) {
     case COMPLETAR_AULA:
+      const index = state.findIndex((x) => x.id === action.payload);
+      if (!isNaN(index) && state[index]) state[index].completa = true;
       break;
     case COMPLETAR_CURSO:
       state.completa = initialState.forEach((aulas) => (aulas.completa = true));
@@ -50,4 +44,6 @@ const reducer = immer.produce((state = initialState, action) => {
       );
       break;
   }
-});
+}, initialState);
+
+export default reducer;

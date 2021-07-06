@@ -11,49 +11,22 @@
 </head>
 
 <body>
-    <script>
-        // Usando o Redux (pode usar Immer ou Não).
-        // Crie uma store contendo os estados iniciais abaixo
-        // Crie as seguintes ações:
-        // aluno/INCREMENTAR_TEMPO, adiciona 1 dia de acesso
-        // aluno/REDUZIR_TEMPO, reduz 1 dia de acesso
-        // aluno/MODIFICAR_EMAIL(email), modifica o email do usuário
-        // aulas/COMPLETAR_AULA(id), completa a aula com base no ID passado
-        // aulas/COMPLETAR_CURSO, completa todas as aulas
-        // aulas/RESETAR_CURSO, reseta todas as aulas completas
-        // Crie constantes e action creators para as ações.
-        // Crie um reducer para aluno e um para aulas.
-        // Renderize na tela o nome, email, tempo restante e o total de aulas completas
-        // Configure a DevTools
+    <h1 id="aula"></h1>
+    <h1 id="aluno"></h1>
+    <script type='module'>
+        import store from './store/configureStore.js';
 
-        const aluno = {
-            nome: 'André Rafael',
-            email: 'andre@origamid.com',
-            diasRestantes: 120,
-        };
+        function render() {
+            const { aluno, aula } = store.getState();
+            const aulaE1 = document.getElementById('aula')
+            const alunoE1 = document.getElementById('aluno')
 
-        const aulas = [
-            {
-                id: 1,
-                nome: 'Design',
-                completa: true,
-            },
-            {
-                id: 2,
-                nome: 'HTML',
-                completa: false,
-            },
-            {
-                id: 3,
-                nome: 'CSS',
-                completa: false,
-            },
-            {
-                id: 4,
-                nome: 'JavaScript',
-                completa: false,
-            },
-        ];
+            alunoE1.innerText = `${aluno.nome} : ${aluno.email} : ${aluno.diasRestantes}`
+
+            console.log(aluno, aula)
+        }
+        render();
+        store.subscribe(render)
 
     </script>
 </body>
